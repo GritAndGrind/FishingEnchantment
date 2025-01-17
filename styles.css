@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('Minecraft.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Minecraft', Arial, sans-serif;
+    text-align: center;
+    background: url('MinecraftFishingRod.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    height: 100vh; /* Ensure body takes full height of the viewport */
+    color: black; /* Set text color to black */
+    font-size: 28px; /* Decrease the base font size */
+}
+
+.text-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Light semi-transparent background color */
+    padding: 20px; /* Add padding for better readability */
+    border-radius: 10px; /* Optional: round the corners of the box */
+    display: inline-block; /* Adjusts the container to fit the text */
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 28px; /* Decrease button font size */
+    color: black; /* Set button text color to black */
+    border-radius: 15px; /* Give buttons a more rounded look */
+    border: 2px solid black; /* Add a border with black color */
+    background-color: rgba(179, 229, 252, 0.8); /* Light background color */
+}
+
+#message {
+    font-size: 32px; /* Decrease message font size */
+    margin-top: 20px;
+    color: black; /* Set message text color to black */
+}
+
+/* Underline the title */
+#title {
+    text-decoration: underline;
+    color: black; /* Set title text color to black */
+    font-size: 36px; /* Decrease title font size */
+}
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8); /* Red semi-transparent background */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 28px; /* Decrease popup font size */
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Water styling */
+#water {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(179, 229, 252, 0.8), rgba(66, 165, 245, 0.8));
+    position: absolute;
+    bottom: 0;
+}
+
+/* Adjusted bobber position */
+#animation {
+    width: 120px; /* Adjust the width for larger size */
+    height: 120px; /* Adjust the height for larger size */
+    margin: 0 auto;
+    background: url('bobber.png') no-repeat center center; /* Set the bobber image */
+    background-size: contain; /* Ensure the image fits within the element */
+    position: absolute;
+    bottom: 100px; /* Position above the water */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bob 1s infinite ease-in-out;
+}
+
+@keyframes bob {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes sink {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}

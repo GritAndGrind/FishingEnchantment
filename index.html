@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fishing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="text-container">
+        <h1 id="title">Fishing Game</h1>
+        <button id="fishButton" onclick="castOrReel()">Cast Fishing Line</button>
+        <div id="animation" class="hidden"></div>
+        <p id="message">Click the button to start fishing!</p>
+        <p id="xp">XP: 0</p>
+        <p id="luck">Luck Level: 0</p>
+        <p id="lure">Lure Level: 0</p>
+        <button onclick="upgrade('luck')">Upgrade Luck</button>
+        <button onclick="upgrade('lure')">Upgrade Lure</button>
+        <h2>Caught Items</h2>
+        <ul id="caughtItemsList">
+            <li>Luck Books: <span id="luckBookCount">0</span></li>
+            <li>Lure Books: <span id="lureBookCount">0</span></li>
+            <li>Rare Fish: <span id="rareFishCount">0</span></li>
+            <li>Uncommon Fish: <span id="uncommonFishCount">0</span></li>
+            <li>Common Fish: <span id="commonFishCount">0</span></li>
+            <li>Small Fish: <span id="smallFishCount">0</span></li>
+            <li>Junk: <span id="junkCount">0</span></li>
+            <li>Legendary Fish: <span id="legendaryFishCount">0</span></li> <!-- Add Legendary Fish -->
+        </ul>
+    </div>
+    <div id="water"></div>
+    <div id="popup" class="popup hidden"></div> <!-- Popup message div -->
+    <script src="script.js"></script>
+</body>
+</html>
