@@ -69,12 +69,12 @@ const reelIn = () => {
     let loot;
     let baseXp = 0;
 
-if (luck >= 2 && random < 0.01) { // Legendary Fish (1%) only if Luck Level is 2 or higher
-    loot = "a Legendary Fish!";
-    legendaryFishCount++;
-    document.getElementById('legendaryFishCount').innerText = legendaryFishCount;
-    baseXp = 50;
-    showPopup("Congratulations! You caught a Legendary Fish!", "./legendaryfish.png");
+    if (luck >= 2 && random < 0.01) { // Legendary Fish (1%) only if Luck Level is 2 or higher
+        loot = "a Legendary Fish!";
+        legendaryFishCount++;
+        document.getElementById('legendaryFishCount').innerText = legendaryFishCount;
+        baseXp = 50;
+        showPopup("Congratulations! You caught a Legendary Fish!", "./legendaryfish.png");
     } else if (random < 0.06) { // Luck Book (6%)
         loot = "a Luck Book!";
         luckBookCount++;
@@ -98,6 +98,7 @@ if (luck >= 2 && random < 0.01) { // Legendary Fish (1%) only if Luck Level is 2
         commonFishCount++;
         document.getElementById('commonFishCount').innerText = commonFishCount;
         baseXp = 6;
+        showPopup("You caught a common fish.", "./commonfish.png");
     } else if (random < 0.95) { // Small fish
         loot = "a small fish.";
         smallFishCount++;
@@ -167,7 +168,7 @@ function showPopup(message, imageUrl = null) {
     if (imageUrl) {
         const imageElement = document.createElement('img');
         imageElement.src = imageUrl;
-        imageElement.alt = 'Legendary Fish';
+        imageElement.alt = 'Fish';
         popup.appendChild(imageElement);
     }
 
