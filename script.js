@@ -182,14 +182,8 @@ function showPopup(message, imageUrl = null) {
     }, 3000);
 }
 
-function openStore() {
-    document.getElementById('store').classList.remove('hidden');
-    updateStore();
-}
 
-function closeStore() {
-    document.getElementById('store').classList.add('hidden');
-}
+
 
 function updateStore() {
     const storeItems = document.getElementById('storeItems');
@@ -200,43 +194,123 @@ function updateStore() {
         <p>Common Fish: ${commonFishCount} - Sell for 10 XP each <button onclick="sellItem('common')">Sell</button></p>
         <p>Small Fish: ${smallFishCount} - Sell for 5 XP each <button onclick="sellItem('small')">Sell</button></p>
         <p>Junk: ${junkCount} - Sell for 2 XP each <button onclick="sellItem('junk')">Sell</button></p>
+        <p>Enchanted Rod II - Buy for 500 XP <button onclick="buyItem('enchantedRodII')">Buy</button></p>
+        <p>Enchanted Rod III - Buy for 1000 XP <button onclick="buyItem('enchantedRodIII')">Buy</button></p>
     `;
 }
 
+function buyItem(itemType) {
+    let xpCost = 0;
+    let itemName = "";
+
+    switch (itemType) {
+        case 'enchantedRodII':
+            xpCost = 500;
+            itemName = "Enchanted Rod II";
+            break;
+        case 'enchantedRodIII':
+            xpCost = 1000;
+            itemName = "Enchanted Rod III";
+            break;
+    }
+
+    if (xp >= xpCost) {
+        xp -= xpCost;
+        document.getElementById('xp').innerText = `XP: ${xp.toFixed(2)}`;
+        showPopup(`You bought an ${itemName}!`);
+    } else {
+        showPopup(`Not enough XP to buy ${itemName}. You need ${xpCost - xp} more XP.`);
+    }
+}
+
+function showPopup(message, imageUrl = null) {
+    const popup = document.getElementById('popup');
+    popup.innerHTML = ''; // Clear previous content
+
+    // Create a paragraph element for the message
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    popup.appendChild(messageElement);
+
+    // If an image URL is provided, create an img element
+    if (imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.alt = 'Notification';
+        popup.appendChild(imageElement);
+    }
+
+    popup.classList.remove('hidden');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 3000);
+}
+
+function openStore() {
+    document.getElementById('store').classList.remove('hidden');
+    document.getElementById('storeItems').classList.remove('hidden'); // Show store items
+    document.getElementById('closeStoreButton').classList.remove('hidden'); // Show close button
+    document.getElementById('storeButton').classList.add('hidden'); // Hide open store button
+    updateStore();
+}
+
+function closeStore() {
+    document.getElementById('store').classList.add('hidden');
+    document.getElementById('storeItems').classList.add('hidden'); // Hide store items
+    document.getElementById('closeStoreButton').classList.add('hidden'); // Hide close button
+    document.getElementById('storeButton').classList.remove('hidden'); // Show open store button
+}
+
+
 function sellItem(itemType) {
     let xpEarned = 0;
+    let itemCount = 0;
+    let itemName = "";
+
     switch (itemType) {
         case 'legendary':
+            itemCount = legendaryFishCount;
+            itemName = "Legendary Fish";
             if (legendaryFishCount > 0) {
                 legendaryFishCount--;
                 xpEarned = 100;
             }
             break;
         case 'rare':
+            itemCount = rareFishCount;
+            itemName = "Rare Fish";
             if (rareFishCount > 0) {
                 rareFishCount--;
                 xpEarned = 50;
             }
             break;
         case 'uncommon':
+            itemCount = uncommonFishCount;
+            itemName = "Uncommon Fish";
             if (uncommonFishCount > 0) {
                 uncommonFishCount--;
                 xpEarned = 20;
             }
             break;
         case 'common':
+            itemCount = commonFishCount;
+            itemName = "Common Fish";
             if (commonFishCount > 0) {
                 commonFishCount--;
                 xpEarned = 10;
             }
             break;
         case 'small':
+            itemCount = smallFishCount;
+            itemName = "Small Fish";
             if (smallFishCount > 0) {
                 smallFishCount--;
                 xpEarned = 5;
             }
             break;
         case 'junk':
+            itemCount = junkCount;
+            itemName = "Junk";
             if (junkCount > 0) {
                 junkCount--;
                 xpEarned = 2;
@@ -244,11 +318,43 @@ function sellItem(itemType) {
             break;
     }
 
+    if (itemCount === 0) {
+        showPopup(`You don't have any ${itemName} to sell.`);
+        return;
+    } else {
+        showPopup(`You sold a ${itemName} and earned ${xpEarned} XP!`);
+    }
+
     xp += xpEarned;
     document.getElementById('xp').innerText = `XP: ${xp.toFixed(2)}`;
     updateStore();
     updateCounts();
 }
+
+function showPopup(message, imageUrl = null) {
+    const popup = document.getElementById('popup');
+    popup.innerHTML = ''; // Clear previous content
+
+    // Create a paragraph element for the message
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    popup.appendChild(messageElement);
+
+    // If an image URL is provided, create an img element
+    if (imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.alt = 'Notification';
+        popup.appendChild(imageElement);
+    }
+
+    popup.classList.remove('hidden');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 3000);
+}
+
+
 
 function updateCounts() {
     document.getElementById('legendaryFishCount').innerText = legendaryFishCount;

@@ -33,13 +33,16 @@
     <div id="popup" class="popup hidden"></div> <!-- Popup message div -->
 	
 	
-	<button id="storeButton" onclick="openStore()">Open Store</button>
+<button id="storeButton" onclick="openStore()">Open Store</button>
 <div id="store" class="hidden">
     <h2>Store</h2>
-    <div id="storeItems">
+    <div id="storeItems" class="hidden">
         <!-- Store items will be displayed here -->
     </div>
-    <button onclick="closeStore()">Close Store</button>
+    <button id="closeStoreButton" class="hidden" onclick="closeStore()">Close Store</button>
+</div>
+
+
 </div>
 
 

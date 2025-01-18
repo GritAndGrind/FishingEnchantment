@@ -21,6 +21,19 @@ body {
     display: inline-block; /* Adjusts the container to fit the text */
 }
 
+.text-container, #store {
+    background-color: rgba(255, 255, 255, 0.5); /* Light semi-transparent background color for text-container */
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* Light green background color for the store */
+#store {
+    background-color: rgba(144, 238, 144, 0.5); /* Light green semi-transparent background color */
+}
+
+
 button {
     margin: 10px;
     padding: 10px 20px;
@@ -57,11 +70,6 @@ button {
     z-index: 1000;
 }
 
-.hidden {
-    display: none;
-}
-
-
 /* Adjusted bobber position */
 #animation {
     width: 120px; /* Adjust the width for larger size */
@@ -86,3 +94,16 @@ button {
     0% { transform: translateY(0); }
     100% { transform: translateY(10px); }
 }
+
+#closeStoreButton.hidden {
+    display: none;
+}
+
+#storeItems.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
