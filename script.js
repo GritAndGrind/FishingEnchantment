@@ -69,12 +69,12 @@ const reelIn = () => {
     let loot;
     let baseXp = 0;
 
-    if (luck >= 2 && random < 0.01) { // Legendary Fish (1%) only if Luck Level is 2 or higher
-        loot = "a Legendary Fish!";
-        legendaryFishCount++;
-        document.getElementById('legendaryFishCount').innerText = legendaryFishCount;
-        baseXp = 20;
-        showPopup("Congratulations! You caught a Legendary Fish!");
+if (luck >= 2 && random < 0.01) { // Legendary Fish (1%) only if Luck Level is 2 or higher
+    loot = "a Legendary Fish!";
+    legendaryFishCount++;
+    document.getElementById('legendaryFishCount').innerText = legendaryFishCount;
+    baseXp = 50;
+    showPopup("Congratulations! You caught a Legendary Fish!", "./legendaryfish.png");
     } else if (random < 0.06) { // Luck Book (6%)
         loot = "a Luck Book!";
         luckBookCount++;
@@ -154,9 +154,23 @@ function checkXPAndBook(requiredXP, bookType) {
     }
 }
 
-function showPopup(message) {
+function showPopup(message, imageUrl = null) {
     const popup = document.getElementById('popup');
-    popup.textContent = message;
+    popup.innerHTML = ''; // Clear previous content
+
+    // Create a paragraph element for the message
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    popup.appendChild(messageElement);
+
+    // If an image URL is provided, create an img element
+    if (imageUrl) {
+        const imageElement = document.createElement('img');
+        imageElement.src = imageUrl;
+        imageElement.alt = 'Legendary Fish';
+        popup.appendChild(imageElement);
+    }
+
     popup.classList.remove('hidden');
     setTimeout(() => {
         popup.classList.add('hidden');
