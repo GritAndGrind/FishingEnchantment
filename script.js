@@ -93,17 +93,20 @@ const reelIn = () => {
         uncommonFishCount++;
         document.getElementById('uncommonFishCount').innerText = uncommonFishCount;
         baseXp = 10;
+		showPopup("Congratulations! You caught a uncommon Fish!", "./uncommonfish.png");
     } else if (random < 0.80) { // Common fish
         loot = "a common fish.";
         commonFishCount++;
         document.getElementById('commonFishCount').innerText = commonFishCount;
         baseXp = 6;
+		showPopup("Congratulations! You caught a common Fish!", "./commonfish.png");
         showPopup("You caught a common fish.", "./commonfish.png");
     } else if (random < 0.95) { // Small fish
         loot = "a small fish.";
         smallFishCount++;
         document.getElementById('smallFishCount').innerText = smallFishCount;
         baseXp = 4;
+		showPopup("Congratulations! You caught a small Fish!", "./smallfish.png");
     } else { // Junk
         loot = "some junk.";
         junkCount++;
