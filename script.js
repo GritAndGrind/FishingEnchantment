@@ -181,3 +181,81 @@ function showPopup(message, imageUrl = null) {
         popup.classList.add('hidden');
     }, 3000);
 }
+
+function openStore() {
+    document.getElementById('store').classList.remove('hidden');
+    updateStore();
+}
+
+function closeStore() {
+    document.getElementById('store').classList.add('hidden');
+}
+
+function updateStore() {
+    const storeItems = document.getElementById('storeItems');
+    storeItems.innerHTML = `
+        <p>Legendary Fish: ${legendaryFishCount} - Sell for 100 XP each <button onclick="sellItem('legendary')">Sell</button></p>
+        <p>Rare Fish: ${rareFishCount} - Sell for 50 XP each <button onclick="sellItem('rare')">Sell</button></p>
+        <p>Uncommon Fish: ${uncommonFishCount} - Sell for 20 XP each <button onclick="sellItem('uncommon')">Sell</button></p>
+        <p>Common Fish: ${commonFishCount} - Sell for 10 XP each <button onclick="sellItem('common')">Sell</button></p>
+        <p>Small Fish: ${smallFishCount} - Sell for 5 XP each <button onclick="sellItem('small')">Sell</button></p>
+        <p>Junk: ${junkCount} - Sell for 2 XP each <button onclick="sellItem('junk')">Sell</button></p>
+    `;
+}
+
+function sellItem(itemType) {
+    let xpEarned = 0;
+    switch (itemType) {
+        case 'legendary':
+            if (legendaryFishCount > 0) {
+                legendaryFishCount--;
+                xpEarned = 100;
+            }
+            break;
+        case 'rare':
+            if (rareFishCount > 0) {
+                rareFishCount--;
+                xpEarned = 50;
+            }
+            break;
+        case 'uncommon':
+            if (uncommonFishCount > 0) {
+                uncommonFishCount--;
+                xpEarned = 20;
+            }
+            break;
+        case 'common':
+            if (commonFishCount > 0) {
+                commonFishCount--;
+                xpEarned = 10;
+            }
+            break;
+        case 'small':
+            if (smallFishCount > 0) {
+                smallFishCount--;
+                xpEarned = 5;
+            }
+            break;
+        case 'junk':
+            if (junkCount > 0) {
+                junkCount--;
+                xpEarned = 2;
+            }
+            break;
+    }
+
+    xp += xpEarned;
+    document.getElementById('xp').innerText = `XP: ${xp.toFixed(2)}`;
+    updateStore();
+    updateCounts();
+}
+
+function updateCounts() {
+    document.getElementById('legendaryFishCount').innerText = legendaryFishCount;
+    document.getElementById('rareFishCount').innerText = rareFishCount;
+    document.getElementById('uncommonFishCount').innerText = uncommonFishCount;
+    document.getElementById('commonFishCount').innerText = commonFishCount;
+    document.getElementById('smallFishCount').innerText = smallFishCount;
+    document.getElementById('junkCount').innerText = junkCount;
+}
+
