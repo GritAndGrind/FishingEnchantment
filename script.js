@@ -88,6 +88,7 @@ const reelIn = () => {
         rareFishCount++;
         document.getElementById('rareFishCount').innerText = rareFishCount;
         baseXp = 15;
+		showPopup("Congratulations! You caught a rare Fish!", "./rarefish.png");
     } else if (random < 0.50) { // Uncommon fish
         loot = "an uncommon fish!";
         uncommonFishCount++;
