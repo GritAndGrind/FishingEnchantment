@@ -55,9 +55,13 @@ const castLine = () => {
         }, 2000); // 2 seconds
     }, reelInTime);
 	
-	// Reduce pole health each cast
-    decreasePoleHealth(5); // Decrease health by 5 each cast (you can adjust this value)
+    // Reduce pole health each cast
+    decreasePoleHealth(poleHealthDecrease); // Use the updated decrease amount
 }
+
+
+
+
 
 const reelIn = () => {
     clearTimeout(fishingTimeout);
@@ -89,10 +93,12 @@ const reelIn = () => {
         loot = "a Luck Book!";
         luckBookCount++;
         document.getElementById('luckBookCount').innerText = luckBookCount;
+		showPopup("Congratulations! You caught a Luck Book!", "./Luck.png");
     } else if (random < 0.12) { // Lure Book (6%)
         loot = "a Lure Book!";
         lureBookCount++;
         document.getElementById('lureBookCount').innerText = lureBookCount;
+		showPopup("Congratulations! You caught a Lure Book!", "./Lure.png");
     } else if (random < 0.20) { // Rare fish
         loot = "a rare fish!";
         rareFishCount++;
@@ -207,9 +213,15 @@ function updateStore() {
         <p style="color: red;">Enchanted Rod II - Buy for 1000 XP <button onclick="buyItem('enchantedRodII')">Buy</button></p>
         <p style="color: red;">Enchanted Rod III - Buy for 2000 XP <button onclick="buyItem('enchantedRodIII')">Buy</button></p>
         <p>Repair Fishing Rod - Buy for 100 XP <button onclick="buyItem('repairRod')">Buy</button></p>
+        <p style="color: magenta;">Unbreaking Book - Buy for 500 XP <button onclick="buyItem('unbreakingBook')">Buy</button></p>
     `;
 }
 
+
+	
+	
+	
+	let poleHealthDecrease = 5; // Initial value
 
 function buyItem(itemType) {
     let xpCost = 0;
@@ -228,6 +240,10 @@ function buyItem(itemType) {
             xpCost = 100;
             itemName = "Repair Fishing Rod";
             break;
+        case 'unbreakingBook':
+            xpCost = 500;
+            itemName = "Unbreaking Book";
+            break;
     }
 
     if (xp >= xpCost) {
@@ -245,6 +261,8 @@ function buyItem(itemType) {
         } else if (itemType === 'repairRod') {
             poleHealth = 100; // Restore fishing pole health to full
             updatePoleHealthMeter();
+        } else if (itemType === 'unbreakingBook') {
+            poleHealthDecrease = 2.5; // Reduce the decrease in pole health
         }
 
         // Update the displayed luck and lure levels
@@ -254,6 +272,11 @@ function buyItem(itemType) {
         showPopup(`Not enough XP to buy ${itemName}. You need ${xpCost - xp} more XP.`);
     }
 }
+
+
+
+	
+
 
 
 
