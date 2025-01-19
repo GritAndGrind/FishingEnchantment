@@ -24,7 +24,14 @@ const castOrReel = () => {
     }
 }
 
+let poleHealth = 100;
+
+
 const castLine = () => {
+	    if (poleHealth <= 0) {
+        document.getElementById('message').innerText = 'Your fishing pole is broken! You need to repair or replace it.';
+        return;
+    }
     document.getElementById('message').innerText = 'Casting...';
     document.getElementById('fishButton').innerText = 'Reel In';
     document.getElementById('animation').classList.remove('hidden');
@@ -32,7 +39,7 @@ const castLine = () => {
     canReelIn = false;
 
     const reelInTime = Math.floor(Math.random() * 5000) + 1000; // between 1 and 6 seconds
-
+	
     fishingTimeout = setTimeout(() => {
         document.getElementById('animation').classList.add('hidden');
         document.getElementById('message').innerText = 'Fish on the line! Click "Reel In"!';
@@ -47,6 +54,9 @@ const castLine = () => {
             document.getElementById('animation').classList.remove('sink');
         }, 2000); // 2 seconds
     }, reelInTime);
+	
+	// Reduce pole health each cast
+    decreasePoleHealth(5); // Decrease health by 5 each cast (you can adjust this value)
 }
 
 const reelIn = () => {
@@ -194,10 +204,12 @@ function updateStore() {
         <p>Common Fish: ${commonFishCount} - Sell for 10 XP each <button onclick="sellItem('common')">Sell</button></p>
         <p>Small Fish: ${smallFishCount} - Sell for 5 XP each <button onclick="sellItem('small')">Sell</button></p>
         <p>Junk: ${junkCount} - Sell for 2 XP each <button onclick="sellItem('junk')">Sell</button></p>
-        <p>Enchanted Rod II - Buy for 500 XP <button onclick="buyItem('enchantedRodII')">Buy</button></p>
-        <p>Enchanted Rod III - Buy for 1000 XP <button onclick="buyItem('enchantedRodIII')">Buy</button></p>
+        <p style="color: red;">Enchanted Rod II - Buy for 1000 XP <button onclick="buyItem('enchantedRodII')">Buy</button></p>
+        <p style="color: red;">Enchanted Rod III - Buy for 2000 XP <button onclick="buyItem('enchantedRodIII')">Buy</button></p>
+        <p>Repair Fishing Rod - Buy for 100 XP <button onclick="buyItem('repairRod')">Buy</button></p>
     `;
 }
+
 
 function buyItem(itemType) {
     let xpCost = 0;
@@ -205,23 +217,45 @@ function buyItem(itemType) {
 
     switch (itemType) {
         case 'enchantedRodII':
-            xpCost = 500;
+            xpCost = 1000;
             itemName = "Enchanted Rod II";
             break;
         case 'enchantedRodIII':
-            xpCost = 1000;
+            xpCost = 2000;
             itemName = "Enchanted Rod III";
+            break;
+        case 'repairRod':
+            xpCost = 100;
+            itemName = "Repair Fishing Rod";
             break;
     }
 
     if (xp >= xpCost) {
         xp -= xpCost;
         document.getElementById('xp').innerText = `XP: ${xp.toFixed(2)}`;
-        showPopup(`You bought an ${itemName}!`);
+        showPopup(`You bought a ${itemName}!`);
+        
+        // Update luck and lure levels based on the purchased item
+        if (itemType === 'enchantedRodII') {
+            luck = Math.max(luck, 2);
+            lure = Math.max(lure, 2);
+        } else if (itemType === 'enchantedRodIII') {
+            luck = Math.max(luck, 3);
+            lure = Math.max(lure, 3);
+        } else if (itemType === 'repairRod') {
+            poleHealth = 100; // Restore fishing pole health to full
+            updatePoleHealthMeter();
+        }
+
+        // Update the displayed luck and lure levels
+        document.getElementById('luck').innerText = `Luck Level: ${luck}`;
+        document.getElementById('lure').innerText = `Lure Level: ${lure}`;
     } else {
         showPopup(`Not enough XP to buy ${itemName}. You need ${xpCost - xp} more XP.`);
     }
 }
+
+
 
 function showPopup(message, imageUrl = null) {
     const popup = document.getElementById('popup');
@@ -365,3 +399,18 @@ function updateCounts() {
     document.getElementById('junkCount').innerText = junkCount;
 }
 
+
+
+const decreasePoleHealth = (amount) => {
+    poleHealth -= amount;
+    if (poleHealth < 0) poleHealth = 0; // Ensure health doesn't go below 0
+    updatePoleHealthMeter();
+}
+
+const updatePoleHealthMeter = () => {
+    const healthFill = document.getElementById('poleHealthFill');
+    const healthValue = document.getElementById('poleHealthValue');
+    healthFill.style.width = `${poleHealth}%`;
+    healthValue.innerText = poleHealth;
+    healthFill.style.backgroundColor = poleHealth > 50 ? 'green' : poleHealth > 20 ? 'orange' : 'red';
+}

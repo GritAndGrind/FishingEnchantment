@@ -107,3 +107,21 @@ button {
     display: none;
 }
 
+#poleHealthMeter {
+    margin-top: 20px;
+}
+
+#poleHealthBar {
+    width: 100%;
+    background-color: lightgray;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#poleHealthFill {
+    height: 20px;
+    background-color: green;
+    transition: width 0.5s;
+}
+
